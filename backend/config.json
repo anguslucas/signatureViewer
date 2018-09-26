@@ -1,0 +1,8 @@
+{
+    "api": {
+        "port": 9999
+    },
+    "signatures" : {
+        "location": "F:\\Users\\Angus\\Desktop\\community-master\\modules\\signatures"
+    }
+}

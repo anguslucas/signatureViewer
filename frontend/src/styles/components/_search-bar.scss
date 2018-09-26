@@ -1,0 +1,23 @@
+//search bar error
+.search-bar-error {
+    color: $off-white;
+    font-style: italic;
+    margin: $m-size 0 0 0;
+    padding: 0 $m-size;
+}
+
+//search bar
+.search-bar {
+    display: flex;
+    padding: $m-size;
+}
+
+.search-bar__input {
+    background: $light-blue;
+    border: none;
+    color: $off-white;
+    border-bottom: .3rem solid darken($dark-blue, 10%);
+    flex-grow: 1;
+    margin-right: $s-size;
+    padding: $s-size;
+}
