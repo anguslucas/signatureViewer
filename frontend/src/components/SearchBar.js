@@ -14,13 +14,9 @@ class SearchBar extends React.Component {
     handleSearch = (e) => {
         e.preventDefault();
         const description = e.target.elements.search.value.trim();
-        this.setState(() => ({ searchTerm: '' }))
         this.props.handleSearch(description)
-            .catch((err) => {
-                this.setState(() => ({
-                    error: err
-                }))
-            })
+            .then(() => this.setState(() => ({ error: '', searchTerm: '' })))
+            .catch((err) => this.setState(() => ({ error: err.message })))
     }
 
     render() {

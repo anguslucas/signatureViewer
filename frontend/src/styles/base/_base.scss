@@ -15,3 +15,9 @@ button {
 button:disabled {
     cursor: default;
 }
+
+input:-webkit-autofill {
+    caret-color: $off-white;
+    -webkit-box-shadow: 0 0 0 30px $light-blue inset;
+    -webkit-text-fill-color: $off-white !important;
+}

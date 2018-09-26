@@ -33,11 +33,12 @@ module.exports = {
      * @req req.params.description the signature description we want to search for
      */
     getFile: function (req, res, next){
-        const description = req.params.description;
-        if (signatureFiles[description]) {
-            fs.readFile(signatureFiles[description], 'utf8', function(err, data) {  
+        const description = req.params.description,
+            fileName = signatureFiles[description];
+        if (fileName) {
+            fs.readFile(fileName, 'utf8', function(err, fileContents) {  
                 if (err) throw err;
-                res.json(data);
+                res.json({ fileName, description, fileContents });
             });
         } else {
             res.status(400).send({error: 'Could not find a file containing this description'});

@@ -1,4 +1,5 @@
 import React from 'react';
+import Promise from 'bluebird';
 import Header from './Header';
 import SearchBar from './SearchBar';
 import {getRequest} from '../helpers/HttpHelper';
@@ -14,8 +15,12 @@ class SignatureViewer extends React.Component {
         return getRequest(url)
             .then((result) => {
                 this.setState(() => ({
-                    fileContents: result.data
+                    fileContents: result.data.fileContents
                 }))
+            })
+            .catch(() => {
+                this.setState(() => ({ fileContents: '' }))
+                throw new Error('Could not find a file containing that description.');
             })
     }
 
@@ -30,7 +35,7 @@ class SignatureViewer extends React.Component {
                     <SearchBar handleSearch={this.handleSearch}/>
                 </div>
                 <div>
-                    {this.state.fileContents && <p>{this.state.fileContents}</p>}
+                    {this.state.fileContents && <pre>{this.state.fileContents}</pre>}
                 </div>
             </div>
         )
