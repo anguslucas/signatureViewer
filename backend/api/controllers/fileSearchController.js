@@ -19,7 +19,12 @@ fs.readdirSync(signatureLocation).forEach((directory) => {
 
                 lr.on('line', function (line) {
                     if (line.includes('description =')) {
-                        signatureFiles[line.split(' = ')[1].substr(1).slice(0, -1)] = filePath;
+                        const description = line.split(' = ')[1].substr(1).slice(0, -1);
+                        if (signatureFiles[description]) {
+                            signatureFiles[description].push(filePath)
+                        } else {
+                            signatureFiles[description] = [filePath]
+                        }
                     }
                 });
             }
@@ -34,14 +39,37 @@ module.exports = {
      */
     getFile: function (req, res, next){
         const description = req.params.description,
-            fileName = signatureFiles[description];
-        if (fileName) {
-            fs.readFile(fileName, 'utf8', function(err, fileContents) {  
-                if (err) throw err;
-                res.json({ fileName, description, fileContents });
+            fileNames = signatureFiles[description];
+        let responseArray = [],
+            promises = [];
+
+        if (fileNames) {
+            fileNames.forEach((fileName) => {
+                if (fileName) {
+                    shortFileName = fileName.split('/');
+                    shortFileName = shortFileName[shortFileName.length - 1];
+    
+                    promises.push(fs.readFileAsync(fileName, 'utf8')
+                        .then((fileContents) => {  
+                            responseArray.push({ fileName: shortFileName, description, fileContents });
+                        })
+                        .catch(() => {
+                            res.status(500).send({error: `Failed to read file ${shortFileName}`});
+                        }));
+                }
             });
         } else {
-            res.status(400).send({error: 'Could not find a file containing this description'});
+            promises.push(Promise.resolve());
         }
+
+        Promise.all(promises)
+            .then(() => {
+                if (responseArray.length > 0) {
+                    res.send(responseArray);
+                } else {
+                    res.status(400).send({error: 'Could not find a file containing this description'});
+                }
+            })
+            .catch(next);
     }
 };

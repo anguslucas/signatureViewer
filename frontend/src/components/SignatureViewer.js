@@ -2,24 +2,24 @@ import React from 'react';
 import Promise from 'bluebird';
 import Header from './Header';
 import SearchBar from './SearchBar';
+import File from './File';
 import {getRequest} from '../helpers/HttpHelper';
+import config from '../../config.json';
 
 
 class SignatureViewer extends React.Component {
     state = {
-        fileContents: ''
+        files: []
     }
 
     handleSearch = (description) => {
-        const url = `http://127.0.0.1:9999/search/${description}`;
+        const url = `${config.api.url}/search/${description}`;
         return getRequest(url)
             .then((result) => {
-                this.setState(() => ({
-                    fileContents: result.data.fileContents
-                }))
+                this.setState(() => ({ files: result.data }))
             })
             .catch(() => {
-                this.setState(() => ({ fileContents: '' }))
+                this.setState(() => ({ files: [] }))
                 throw new Error('Could not find a file containing that description.');
             })
     }
@@ -35,7 +35,9 @@ class SignatureViewer extends React.Component {
                     <SearchBar handleSearch={this.handleSearch}/>
                 </div>
                 <div>
-                    {this.state.fileContents && <pre>{this.state.fileContents}</pre>}
+                    {this.state.files.map((file, index) => (
+                        <File key={index} fileContents={file.fileContents}/>
+                    ))}
                 </div>
             </div>
         )
