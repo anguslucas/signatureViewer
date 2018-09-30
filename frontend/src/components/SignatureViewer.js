@@ -36,7 +36,7 @@ class SignatureViewer extends React.Component {
                 </div>
                 <div>
                     {this.state.files.map((file, index) => (
-                        <File key={index} fileContents={file.fileContents}/>
+                        <File key={index} fileContents={file.fileContents} fileName={file.fileName}/>
                     ))}
                 </div>
             </div>

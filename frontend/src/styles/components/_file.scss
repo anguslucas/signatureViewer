@@ -1,0 +1,24 @@
+.file {
+    background-color: $light-blue;
+    padding: $l-size $m-size;
+    margin: 0 20% $s-size 20%;
+}
+
+.file__h2 {
+    color: white;
+    font-weight: 500;
+    font-size: 3rem;
+    margin: 0;
+    word-break: break-all;
+    border-bottom: 1px solid lighten($light-blue, 10%);
+    padding-bottom: $s-size;
+}
+
+.file__text {
+    color: $off-white;
+    font-size: $m-size;
+    font-weight: 500;
+    margin: $m-size 0 0 $xl-size;
+    white-space: pre-wrap;
+    word-break: break-all;
+}

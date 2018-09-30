@@ -89,7 +89,7 @@ module.exports = {
             fileNames.forEach((fileName) => {
                 if (fileName) {
                     shortFileName = fileName.split('/');
-                    shortFileName = shortFileName[shortFileName.length - 1];
+                    shortFileName = `${shortFileName[shortFileName.length - 2]}/${shortFileName[shortFileName.length - 1]}`;
     
                     promises.push(fs.readFileAsync(fileName, 'utf8')
                         .then((fileContents) => {  
