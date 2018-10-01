@@ -25,6 +25,19 @@ class SignatureViewer extends React.Component {
             })
     }
 
+    handleClearFile = (fileName) => {
+        this.state.files.forEach((file, index) => {
+            if (file.fileName === fileName) {
+                let updatedFilesArray = this.state.files;
+                updatedFilesArray.splice(index, 1)
+
+                this.setState(() => ({
+                    files: updatedFilesArray
+                }))
+            }
+        })
+    }
+
     render() {
         const title = 'Cuckoo Signature Viewer'
         const subtitle = 'Search for Cuckoo signatures by description';
@@ -37,7 +50,7 @@ class SignatureViewer extends React.Component {
                 </div>
                 <div>
                     {this.state.files.map((file, index) => (
-                        <File key={index} fileContents={file.fileContents} fileName={file.fileName}/>
+                        <File key={index} fileContents={file.fileContents} fileName={file.fileName} handleClearFile={this.handleClearFile}/>
                     ))}
                 </div>
             </div>

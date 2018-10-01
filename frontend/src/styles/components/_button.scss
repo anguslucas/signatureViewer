@@ -11,3 +11,13 @@
 .search_button:disabled {
     opacity: .5;
 }
+
+.clear_button {
+    background: $purple;
+    border: none;
+    border-bottom: .3rem solid darken($purple, 10%);
+    color: white;
+    font-weight: 500;
+    padding: $xs-size;
+    margin-bottom: $m-size;
+}
