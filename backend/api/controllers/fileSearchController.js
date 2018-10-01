@@ -80,10 +80,19 @@ module.exports = {
      * @req req.params.description the signature description we want to search for
      */
     getFile: function (req, res, next){
-        const description = req.params.description.toLocaleLowerCase(),
-            fileNames = signatureFiles[description];
+        const description = req.params.description.toLocaleLowerCase();
         let responseArray = [],
-            promises = [];
+            promises = [],
+            fileNames = signatureFiles[description] || [];
+
+        //find descriptions containing the search term if we couldnt find an exact match
+        if (fileNames.length === 0) {
+            Object.keys(signatureFiles).forEach((key) => {
+                if (key.includes(description)) {
+                    fileNames = fileNames.concat(signatureFiles[key]);
+                }
+            });
+        }
 
         if (fileNames) {
             fileNames.forEach((fileName) => {
