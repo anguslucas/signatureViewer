@@ -17,6 +17,7 @@ class SignatureViewer extends React.Component {
         return getRequest(url)
             .then((result) => {
                 this.setState(() => ({ files: result.data }))
+                return this.state.files.length;
             })
             .catch(() => {
                 this.setState(() => ({ files: [] }))
