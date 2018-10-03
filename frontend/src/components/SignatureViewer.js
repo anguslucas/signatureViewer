@@ -16,8 +16,7 @@ class SignatureViewer extends React.Component {
         const url = `${config.api.url}/search/${description}`;
         return getRequest(url)
             .then((result) => {
-                this.setState(() => ({ files: result.data }))
-                return this.state.files.length;
+                this.setState(() => ({ files: result.data }));
             })
             .catch(() => {
                 this.setState(() => ({ files: [] }))
@@ -48,6 +47,7 @@ class SignatureViewer extends React.Component {
                 <div className="container">
                     <SearchBar handleSearch={this.handleSearch}/>
                 </div>
+                {this.state.files.length > 0 && <p className="signature-viewer__p">Search found {this.state.files.length} result{this.state.files.length > 1 ? 's' : ''}.</p>}
                 <div>
                     {this.state.files.map((file, index) => (
                         <File key={index} fileContents={file.fileContents} fileName={file.fileName} handleClearFile={this.handleClearFile}/>
