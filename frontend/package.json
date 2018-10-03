@@ -5,7 +5,7 @@
   "author": "Angus Lucas",
   "license": "MIT",
   "scripts": {
-    "serve": "live-server public/",
+    "serve": "http-server",
     "build": "webpack",
     "dev-server": "webpack-dev-server"
   },
@@ -19,7 +19,7 @@
     "babel-preset-react": "6.24.1",
     "bluebird": "^3.5.2",
     "css-loader": "0.28.4",
-    "live-server": "^1.2.0",
+    "http-server": "^0.11.1",
     "node-sass": "4.5.3",
     "normalize.css": "7.0.0",
     "react": "16.0.0",
